@@ -1,0 +1,62 @@
+Hi Sam,
+
+This routine is an alternative to use SQLITE in Rexx language.
+I used a FILE965 from CBTTAPE written by John McKown (thanks John!!).
+Basically this module execute SQL commands and queries. The source
+code has written in COBOL Enterprise and should run in any MVS after
+OS390 v2.8.
+
+The sintaxe of command is something like this :
+
+ SQLITE INIT         /POSIX(ON)
+        EXEC ESQL
+        BATCH ESQL
+        QUERY ESQL
+
+For INIT parameter, the tool only assign some default Rexx variables.
+
+For EXEC parameter, the variables SQLAFFCT, SQLCODE and SQLMSG has
+updated. Almost all SQLITE commands are supported with EXEC parameter.
+
+For QUERY parameter, the variables SQLRECS, SQLCODE, SQLMSG has updated.
+
+For BATCH parameter, you should use a ESQL stem with your SQL commands.
+This is a good option for massive updates.
+
+Variables :
+
+SQLAFFCT, total of affected record in a UPDATE, INSERT or DELETE
+
+SQLCODE, SQLITE return code
+
+SQLRECS, total of records retrieved in a SELECT statement
+
+SQLMSG, SQLITE internal messages
+
+ESQL, variable with SQL command
+
+DBIO_DBNAME, current path of your SQLITE database.
+
+DBIO_ALIAS, symbol used as prefix of returned variables after a SELECT.
+
+DBIO_FLAG1='N' - if Yes, the fields of table are stored into data stack
+                 and separated by symbol in DBIO_FLAG2. If No (default)
+                 the fields of table are stored as rexx variables
+
+DBIO_FLAG2=';'   delimiter used in data stack record
+
+DBIO_FLAG4='N'   if Yes, the fields of tables are stored into rexx
+                 variables with no index (no stem)
+
+DBIO_FLAG6='N'   if Yes, the tool will get a table metadata and all
+                 table fields will be described in DBIO_DESCRIBE.n
+                 variable
+
+DBIO_FLAG7='N'   if Yes, use the transational mode. If any error
+                 the tool will issue a Rollback.
+
+DBIO_ALIAS='$'   symbol used as prefix in stored rexx variables
+
+Enjoy
+Daniel Gaeta
+dfgaeta@me.com

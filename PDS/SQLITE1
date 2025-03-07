@@ -1,0 +1,25 @@
+/* REXX */
+
+  'SQLITE INIT SQLITE'
+
+  DBIO_DBNAME='/u/gaeta/dbtest.db'
+
+  SAY 'SELECT... #1'
+  ESQL='SELECT cod,nome from tbsamp'
+
+  'SQLITE QUERY ESQL /POSIX(ON)'
+  SAY 'SQLITE SQLRECS=' SQLRECS
+  SAY 'SQLITE RC=' RC
+  DO I=1 TO SQLRECS
+    SAY $cod.i $nome.i
+  END
+
+  SAY 'SELECT... #2'
+  ESQL='SELECT count(*) as recs from tbsamp'
+
+  'SQLITE QUERY ESQL /POSIX(ON)'
+  SAY 'SQLITE SQLRECS=' SQLRECS
+  SAY 'SQLITE RC=' RC
+  SAY 'RECORDS=' $RECS.1
+
+EXIT

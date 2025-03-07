@@ -1,0 +1,38 @@
+/* REXX */
+
+  'SQLITE INIT'
+  DBIO_DBNAME='/u/gaeta/dbtest.db'
+
+DBIO_FLAG1='N'   /* FIELDS CONCATANATED IN A SINGLE STACK REGISTER */
+DBIO_FLAG4='N'   /* ONLY ONE RETURNED RECORD - NO STEM SUFFIX      */
+DBIO_FLAG2=';'   /* DELIMITER TO CSV STYLE - REFER TO FLAG1        */
+DBIO_FLAG6='N'   /* DESCRIBE TABLE INTO DBIO_DESCRIBE.x STEM       */
+DBIO_FLAG7='N'   /* TRANSACTION MODE                               */
+DBIO_ALIAS='$'   /* ALIAS/PREFIX TO FIELD NAME                     */
+
+
+SQLCOLS=0
+ESQL="SELECT * from tbsamp"
+'SQLITE QUERY ESQL /POSIX(ON)'
+SAY 'RC     ='RC
+SAY 'SQLCODE='SQLCODE   /* sqlite3 return code - different of db2 */
+SAY 'SQLAFFCT='SQLAFFCT /* record updates after a update or delete */
+SAY 'SQLCOLS='SQLCOLS   /* number of columns of last select        */
+SAY 'SQLMSG=' SQLMSG    /* sqlte3 internal message                 */
+SAY 'QUEUED=' QUEUED()
+
+DO I=1 TO SQLCOLS
+  SAY 'DESCRIBE=' DBIO_DESCRIBE.I /* stem of fields of table */
+END
+DO QUEUED()
+  PARSE PULL S
+  SAY S
+END
+
+DO I=1 TO SQLRECS
+  SAY $COD.I $NOME.I $SALARIO.I  /* tables fields are assinged to    */
+END                              /* your current rexx pool variables */
+                                 /* as default the fields has a      */
+                                 /* $ prefix. it can be changed using*/
+                                 /* dbio_alias variable              */
+EXIT
