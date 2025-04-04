@@ -1,0 +1,11 @@
+/* REXX */
+
+  'SQLITE INIT SQLITE'
+
+  DBIO_DBNAME='/u/gaeta/dbtest.db'
+
+  esql="create table tbsamp (cod int,nome text)"
+  'SQLITE EXEC ESQL /POSIX(ON)'
+  say 'CREATE SQLCODE='SQLCODE
+
+exit
